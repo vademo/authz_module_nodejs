@@ -77,7 +77,7 @@ config({
 ```
 ## Usage
 
-The module can be uses as an express middleware or as an function. The parameter is a string to check a single permission or an array to check multiple permissions. If a permission is missing an Error of the type [**PermissionError**](#permissionError) will be thrown.
+The module can be used as an express middleware or as a function. The parameter is a string to check a single permission or an array to check multiple permissions. If a permission is missing an Error of the type [**PermissionError**](#permissionError) will be thrown.
 
 An example of this can be found in the documentation below and in the example folder.
 
