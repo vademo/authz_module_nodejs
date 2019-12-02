@@ -48,7 +48,7 @@ $ yarn add @digipolis/authz
 | :---                      | :---                                                                                  | :---                              |
 | ***debug***               | Set debugging mode                                                                    | **true** / **false** (default)    |
 | ***applicationId***       | Name of application from UM                                                           | *\_APPLICATION_ID\_*              |
-| ***source***              | The source to use                                                                      | **authzv2**                       |
+| ***source***              | The source to use                                                                      | **authzv2** / **meauthz**                      |
 | ***sources***             | Object with possible authz sources and their configurations                           | ```{ authzv2: { _config_ }}```    |
 | authzv2: ***url***        | Url of the authz api (v2) You can find this on the api-store                          | *\_URL\_OAUTHZ\_*                 |
 | authzv2: ***apikey***     | Api key. You will need to create an application with a contract with the authz api    | *\_APIKEY\_*                      |
@@ -60,12 +60,17 @@ const { config } = require('@digipolis/authz');
 
 config({
   debug: true,
-  applicationId: '_APPLICATION_ID_',
   source: 'authzv2',
   sources: {
     authzv2: {
       url:  '_URL_AUTHZ_',
       apikey: '_APIKEY_',
+      applicationId: '_APPLICATION_ID_',
+    },
+    meauthz: {
+      url:  '_URL_AUTHZ_',
+      apikey: '_APIKEY_',
+      applicationId: '_APPLICATION_ID_',
     },
   },
 });
@@ -85,8 +90,13 @@ const { hasPermission } = require('@digipolis/authz');
 
 const router = new Router();
 
+// Check single permission in default source
 router.get('/', hasPermission('login-app'), controller);
+// Check mutiple permissions in default source
 router.get('/', hasPermission(['login-app', 'admin-app']), controller);
+// Check permission in default meauthz source
+router.get('/', hasPermission('login-app', 'meauthz'), controller);
+
 ```
 #### Usage as function:
 Configuration should be done before usage.
@@ -98,6 +108,7 @@ const { create } = require('./itemcreator.service');
 async function createSomething(params, usertoken) {
     await checkPermission(usertoken, 'login-app'); //throws error if invalid
     await checkPermission(usertoken, ['login-app', 'use-app']); //throws error if invalid
+    await checkPermission(usertoken, 'login-app', 'meauthz'); //throws error if invalid
     return create(params);
 }
 ```

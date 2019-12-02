@@ -10,18 +10,24 @@ const port = 3000;
 // Setup configuration
 config({
   debug: true,
-  applicationId: process.env.APPID,
   source: 'authzv2',
   sources: {
     authzv2: {
       url: process.env.AUTHZV2_URL,
       apikey: process.env.AUTHZV2_APIKEY,
+      applicationId: process.env.APPID,
+    },
+    meauthz: {
+      url: process.env.MEAUTHZ_URL,
+      apikey: process.env.MEAUTHZ_APIKEY,
+      applicationId: process.env.APPID,
     },
   },
 });
 
 app.get('/', hasPermission('login-app'), helloWord);
 app.get('/helloWordAuthInController', helloWordAuthInController);
+app.get('/meauthz', hasPermission('login-app', 'meauthz'), helloWord);
 
 // Handle PermissionErrors from hasPermission middleware
 app.use(errorhandler);

@@ -4,19 +4,19 @@ const logginghelper = require('../lib/helper/logging.helper');
 const sinon = require('sinon');
 const PermissionError = require('../lib/errors/permission.error');
 const umPermissions = require('./data/um.permissions.json');
-const { AUTHZV2_CONFIG_MISSING, APPLICATIONID_MISSING, PERMISSION_CALL_FAILED } = require('../lib/errors/error.messages');
+const { MEAUTHZ_CONFIG_MISSING, APPLICATIONID_MISSING, PERMISSION_CALL_FAILED } = require('../lib/errors/error.messages');
 
 chai.use(require('sinon-chai'));
 
 const { expect } = chai;
 const config = require('../lib/config');
-const um = require('../lib/services/datasources/authzv2.permissions');
+const um = require('../lib/services/datasources/meauthz.permissions');
 
 const umConfig = {
   debug: true,
   source: 'authzv2',
   sources: {
-    authzv2: {
+    meauthz: {
       url: 'fakeurl',
       applicationId: 'FAKEAPP',
       apikey: 'fakekey',
@@ -55,7 +55,7 @@ describe('Get Permissions from authzv2:', () => {
       throw new Error("shouldn't resolve", result);
     }).catch((e) => {
       expect(e).to.be.instanceof(Error);
-      expect(e.message).to.eql(AUTHZV2_CONFIG_MISSING);
+      expect(e.message).to.eql(MEAUTHZ_CONFIG_MISSING);
       sinon.assert.called(logging);
     });
   });
@@ -66,7 +66,7 @@ describe('Get Permissions from authzv2:', () => {
       throw new Error("shouldn't resolve", result);
     }).catch((e) => {
       expect(e).to.be.instanceof(Error);
-      expect(e.message).to.eql(AUTHZV2_CONFIG_MISSING);
+      expect(e.message).to.eql(MEAUTHZ_CONFIG_MISSING);
       sinon.assert.notCalled(logging);
     });
   });
@@ -75,7 +75,7 @@ describe('Get Permissions from authzv2:', () => {
       ...umConfig,
       debug: false,
       sources: {
-        authzv2: {
+        meauthz: {
           url: 'fakeurl',
           applicationId: false,
           apikey: 'fakekey',
@@ -96,7 +96,7 @@ describe('Get Permissions from authzv2:', () => {
       ...umConfig,
       debug: true,
       sources: {
-        authzv2: {
+        meauthz: {
           url: 'fakeurl',
           applicationId: false,
           apikey: 'fakekey',
