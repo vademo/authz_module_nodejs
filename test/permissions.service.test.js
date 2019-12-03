@@ -16,7 +16,7 @@ const umConfig = {
   sources: {
     authzv2: {
       url: 'fakeurl',
-      apikey: 'fakekey',
+      apiKey: 'fakekey',
     },
   },
 };
@@ -78,11 +78,11 @@ describe('permissions.service', () => {
       sources: {
         authzv2: {
           url: 'fakeurl',
-          apikey: 'fakekey',
+          apiKey: 'fakekey',
         },
         meauthz: {
           url: 'fakeurl',
-          apikey: 'fakekey',
+          apiKey: 'fakekey',
         },
       },
     });

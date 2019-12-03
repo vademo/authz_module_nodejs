@@ -19,7 +19,7 @@ const umConfig = {
     meauthz: {
       url: 'fakeurl',
       applicationId: 'FAKEAPP',
-      apikey: 'fakekey',
+      apiKey: 'fakekey',
     },
   },
 };
@@ -78,7 +78,7 @@ describe('Get Permissions from authzv2:', () => {
         meauthz: {
           url: 'fakeurl',
           applicationId: false,
-          apikey: 'fakekey',
+          apiKey: 'fakekey',
         },
       },
     });
@@ -99,7 +99,7 @@ describe('Get Permissions from authzv2:', () => {
         meauthz: {
           url: 'fakeurl',
           applicationId: false,
-          apikey: 'fakekey',
+          apiKey: 'fakekey',
         },
       },
     });

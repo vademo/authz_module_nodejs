@@ -14,12 +14,12 @@ config({
   sources: {
     authzv2: {
       url: process.env.AUTHZV2_URL,
-      apikey: process.env.AUTHZV2_APIKEY,
+      apiKey: process.env.AUTHZV2_APIKEY,
       applicationId: process.env.APPID,
     },
     meauthz: {
       url: process.env.MEAUTHZ_URL,
-      apikey: process.env.MEAUTHZ_APIKEY,
+      apiKey: process.env.MEAUTHZ_APIKEY,
       applicationId: process.env.APPID,
     },
   },

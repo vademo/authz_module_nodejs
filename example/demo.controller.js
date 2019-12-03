@@ -15,7 +15,6 @@ async function helloWorldAuthInController(req, res, next) {
     if (err.name === 'PermissionError') {
       // eslint-disable-next-line
       console.log('Detected authorization error');
-      next(err);
     }
     return next(err);
   }

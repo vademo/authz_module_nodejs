@@ -1,7 +1,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/digipolisantwerp/authz_module_nodejs/badge.svg?branch=master)](https://coveralls.io/github/digipolisantwerp/authz_module_nodejs?branch=master)
 # @digipolis/Authz
 
-Authorization of an user
+Authorization module which can be used to check the permissions of an authenticated user.
 
 ### Table of contents:
 
@@ -20,7 +20,6 @@ Authorization of an user
       	     * [Error detail](#error-detail)
       	     * [Error handling](#error-handling)
    * [Running the tests](#running-the-tests)
-   * [Versioning](#versioning)
    * [Versioning](#versioning)
    * [Authors](#authors)
    * [License](#license)
@@ -41,17 +40,17 @@ $ yarn add @digipolis/authz
 
 ## Configuration
 
-#### Configuration for the use with UM:
+#### Configuration for the use with the User Management Engine (UM):
 
 ##### Params:
 | Param                     | Description                                                                           | Values                            |
 | :---                      | :---                                                                                  | :---                              |
 | ***debug***               | Set debugging mode                                                                    | **true** / **false** (default)    |
-| ***applicationId***       | Name of application from UM                                                           | *\_APPLICATION_ID\_*              |
 | ***source***              | The source to use by default. You can also specify a source in the function call      | **authzv2** / **meauthz**         |
 | ***sources***             | Object with possible authz sources and their configurations                           | ```{ authzv2: { _config_ }}```    |
+| authzv2: ***applicationId***       | Name of application from UM                                                           | *\_APPLICATION_ID\_*              |
 | authzv2: ***url***        | Url of the authz api (v2) You can find this on the api-store                          | *\_URL\_OAUTHZ\_*                 |
-| authzv2: ***apikey***     | Api key. You will need to create an application with a contract with the authz api    | *\_APIKEY\_*                      |
+| authzv2: ***apiKey***     | Api key. You will need to create an application with a contract with the authz api    | *\_APIKEY\_*                      |
 
 ##### Example:
 
@@ -64,12 +63,12 @@ config({
   sources: {
     authzv2: {
       url:  '_URL_AUTHZ_',
-      apikey: '_APIKEY_',
+      apiKey: '_APIKEY_',
       applicationId: '_APPLICATION_ID_',
     },
     meauthz: {
       url:  '_URL_AUTHZ_',
-      apikey: '_APIKEY_',
+      apiKey: '_APIKEY_',
       applicationId: '_APPLICATION_ID_',
     },
   },
@@ -113,7 +112,7 @@ async function createSomething(params, usertoken) {
 }
 ```
 
-#### Permissionerror:
+#### PermissionError:
 
 ##### Model
 
@@ -131,8 +130,6 @@ async function createSomething(params, usertoken) {
 
 -  `ApplicationId not configured.`
 -  `Authzv2 not configured.`
--  `Trying to set configuration more then once.`
--  `Force set configuration.`
 -  `Missing permissions: permission1` [Detail](#missing-permissions)
 -  `Failed to retrieve permissions.` [Detail](#failed-to-retrieve-permissions)
 -  `No authorization found in header.`

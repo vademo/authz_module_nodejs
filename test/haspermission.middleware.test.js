@@ -17,7 +17,7 @@ const umConfig = {
   sources: {
     authzv2: {
       url: 'fakeurl',
-      apikey: 'fakekey',
+      apiKey: 'fakekey',
     },
   },
 };
