@@ -14,6 +14,7 @@ const umConfig = {
   debug: true,
   applicationId: 'FAKEAPP',
   source: 'authzv2',
+  tokenLocation: 'headers.authorization',
   sources: {
     authzv2: {
       url: 'fakeurl',
@@ -29,6 +30,9 @@ describe('Haspermission middleware', () => {
   beforeEach((done) => {
     sandbox = sinon.createSandbox();
     fakeReq.get = sandbox.stub().returns('faketoken');
+    fakeReq.headers = {
+      authorization: 'faketoken',
+    };
     nextStub = sandbox.stub();
     done();
   });
@@ -62,6 +66,31 @@ describe('Haspermission middleware', () => {
     await middleware(fakeReq, {}, nextStub);
     const errArg = nextStub.firstCall.args[0];
     expect(errArg, 'Next shoudn`t be called with argument if successful`').to.be.undefined;
+  });
+  it('Auth different location', async () => {
+    fakeReq.session = {
+      authorization: 'faketoken',
+    };
+    sandbox.stub(config, 'getConfig').returns({ ...umConfig, debug: false, tokenLocation: 'session.authorization' });
+    sandbox.stub(authzv2, 'getPermissions').resolves(['permission3', 'permission2', 'permission1']);
+    const middleware = hasPermission('permission1');
+    await middleware(fakeReq, {}, nextStub);
+
+    sinon.assert.called(nextStub);
+    const errArg = nextStub.firstCall.args[0];
+    expect(errArg, 'Next shoudn`t be called with argument if successful`').to.be.undefined;
+  });
+  it('Auth different location missing', async () => {
+    fakeReq.session = {
+      authorization: false,
+    };
+    sandbox.stub(config, 'getConfig').returns({ ...umConfig, debug: false, tokenLocation: 'session.authorization' });
+    const middleware = hasPermission(['permission2', 'permission1']);
+    await middleware(fakeReq, {}, nextStub);
+    const errArg = nextStub.firstCall.args[0];
+    expect(errArg).to.be.instanceof(Error);
+    expect(errArg).to.be.instanceof(PermissionError);
+    expect(errArg.message).to.equal(TOKEN_MISSING);
   });
   it('Permission string', async () => {
     sandbox.stub(config, 'getConfig').returns({ ...umConfig, debug: false });
