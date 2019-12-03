@@ -48,7 +48,7 @@ $ yarn add @digipolis/authz
 | :---                      | :---                                                                                  | :---                              |
 | ***debug***               | Set debugging mode                                                                    | **true** / **false** (default)    |
 | ***applicationId***       | Name of application from UM                                                           | *\_APPLICATION_ID\_*              |
-| ***source***              | The source to use                                                                      | **authzv2** / **meauthz**                      |
+| ***source***              | The source to use by default. You can also specify a source in the function call      | **authzv2** / **meauthz**         |
 | ***sources***             | Object with possible authz sources and their configurations                           | ```{ authzv2: { _config_ }}```    |
 | authzv2: ***url***        | Url of the authz api (v2) You can find this on the api-store                          | *\_URL\_OAUTHZ\_*                 |
 | authzv2: ***apikey***     | Api key. You will need to create an application with a contract with the authz api    | *\_APIKEY\_*                      |
