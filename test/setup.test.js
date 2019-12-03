@@ -1,4 +1,5 @@
-const { logger } = require('../lib/helper/logging.helper');
+const sinon = require('sinon');
 
 // silence logs during tests
-logger.transports[0].silent = true;
+sinon.stub(console, 'warn').returns();
+sinon.stub(console, 'error').returns();

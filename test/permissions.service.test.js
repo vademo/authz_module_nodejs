@@ -93,4 +93,22 @@ describe('permissions.service', () => {
     expect(mepermissions).to.eql(['mepermission3', 'mepermission2', 'mepermission1']);
     sinon.assert.called(mestub);
   });
+  it('Use cache', async () => {
+    sandbox.stub(config, 'getConfig').returns({
+      cache: true,
+      debug: true,
+      applicationId: 'FAKEAPP',
+      source: 'authzv2',
+      sources: {
+        authzv2: {
+          url: 'fakeurl',
+          apikey: 'fakekey',
+        },
+      },
+    });
+    const permissions = await permissionService.getPermissions('faketoken');
+    const permissionsCache = await permissionService.getPermissions('faketoken');
+    sinon.assert.calledOnce(umsstub);
+    expect(permissions).to.eql(permissionsCache);
+  });
 });
