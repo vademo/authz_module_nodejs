@@ -2,7 +2,7 @@
 const express = require('express');
 const { config, hasPermission } = require('./../lib');
 const errorhandler = require('./error.middleware');
-const { helloWord, helloWordAuthInController } = require('./demo.controller');
+const { helloWorld, helloWorldAuthInController } = require('./demo.controller');
 
 const app = express();
 const port = 3000;
@@ -25,9 +25,9 @@ config({
   },
 });
 
-app.get('/', hasPermission('login-app'), helloWord);
-app.get('/helloWordAuthInController', helloWordAuthInController);
-app.get('/meauthz', hasPermission('login-app', 'meauthz'), helloWord);
+app.get('/', hasPermission('login-app'), helloWorld);
+app.get('/helloWorldAuthInController', helloWorldAuthInController);
+app.get('/meauthz', hasPermission('login-app', 'meauthz'), helloWorld);
 
 // Handle PermissionErrors from hasPermission middleware
 app.use(errorhandler);

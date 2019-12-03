@@ -1,10 +1,10 @@
 const { checkPermission } = require('./../lib');
 
-function helloWord(req, res) {
+function helloWorld(req, res) {
   return res.send('Hello World!');
 }
 
-async function helloWordAuthInController(req, res, next) {
+async function helloWorldAuthInController(req, res, next) {
   try {
     if (!req.get('authorization')) throw new Error('missing token');
 
@@ -22,6 +22,6 @@ async function helloWordAuthInController(req, res, next) {
 }
 
 module.exports = {
-  helloWord,
-  helloWordAuthInController,
+  helloWorld,
+  helloWorldAuthInController,
 };
