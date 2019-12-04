@@ -1,0 +1,22 @@
+language: node_js
+
+node_js:
+  - "8"
+  - "10"
+  - "11"
+  - "12"
+  - "13"
+
+sudo: false
+
+
+cache:
+    directories:
+      - "node_modules"
+script:
+  - npm ci
+  - npm run coverage
+
+after_script:
+  - "npm install coveralls"
+  - "cat ./backend/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
