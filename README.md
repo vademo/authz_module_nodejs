@@ -48,7 +48,7 @@ $ yarn add @digipolis/authz
 | ***debug*** *(optional)*          | Set debugging mode                                                                                        | **true** / **false** (default)                        |
 | ***source***                      | The source to use by default. You can also specify a source in the function call                          | **authzv2** / **meauthz**                             |
 | ***sources***                     | Object with possible authz sources and their configurations                                               | `{ authzv2: { _config_ }}`                            |
-| **tokenLocation** *(optional)* | Location of the token on the request object. Used by middleware. Defaults to 'headers.authorization'      | headers.authorization / req.session.token (exapmle)   |
+| **tokenLocation** *(optional)* | Location of the token on the request object. Used by middleware. Defaults to 'headers.authorization'      | headers.authorization / req.session.token (example)   |
 | authzv2: ***applicationId***      | Name of application from UM                                                                               | *\_APPLICATION_ID\_*                                  |
 | authzv2: ***url***                | Url of the authz api (v2) You can find this on the api-store                                              | *\_URL\_OAUTHZ\_*                                     |
 | authzv2: ***apiKey***             | Api key. You will need to create an application with a contract with the authz api                        | *\_APIKEY\_*                                          |
