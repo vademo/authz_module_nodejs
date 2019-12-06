@@ -56,7 +56,7 @@ For applications which use the User Management Engine and have an OAuth2 access 
 | ***source***                      | The source to use by default. You can also specify a source in the function call                          | **authzv2** / **meauthz**                             |
 | ***sources***                     | Object with possible authz sources and their configurations                                               | `{ authzv2: { _config_ }}`                            |
 | **tokenLocation** *(optional)*    | Location of the token on the request object. Used by middleware. Defaults to 'headers.authorization'      | headers.authorization / session.token (example)       |
-| ***cache*** *(optional)*          | Enable cache (ttl: 600)                                                                                   | **true** (default) / **false**                        |
+| **cache** *(optional)*            | Enable cache. The permissions will be cached based for a token+source with a TTL of 600 (10min)           | **true** (default) / **false**                        |
 | authzv2: ***applicationId***      | Name of application from UM                                                                               | *\_APPLICATION_ID\_*                                  |
 | authzv2: ***url***                | Url of the authz api (v2) You can find this on the api-store                                              | *\_URL\_OAUTHZ\_*                                     |
 | authzv2: ***apiKey***             | Api key. You will need to create an application with a contract with the authz api                        | *\_APIKEY\_*                                          |
