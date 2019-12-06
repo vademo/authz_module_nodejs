@@ -41,10 +41,10 @@ $ yarn add @digipolis/authz
 
 ## Configuration
 
-###Available sources: 
-####authzv2: 
+###Available sources:
+####authzv2:
 For applications which use the User Management Engine and have a JWT token of the authenticated user (mostly API's).
-####meauthzv2: 
+####meauthzv2:
 For applications which use the User Management Engine and have an OAuth2 access token of the authenticated user (mostly BFF's).
 
 ### Configuration for the use with the User Management Engine (UM):
@@ -55,7 +55,8 @@ For applications which use the User Management Engine and have an OAuth2 access 
 | ***debug*** *(optional)*          | Set debugging mode                                                                                        | **true** / **false** (default)                        |
 | ***source***                      | The source to use by default. You can also specify a source in the function call                          | **authzv2** / **meauthz**                             |
 | ***sources***                     | Object with possible authz sources and their configurations                                               | `{ authzv2: { _config_ }}`                            |
-| **tokenLocation** *(optional)* | Location of the token on the request object. Used by middleware. Defaults to 'headers.authorization'         | headers.authorization / session.token (example)   |
+| **tokenLocation** *(optional)*    | Location of the token on the request object. Used by middleware. Defaults to 'headers.authorization'      | headers.authorization / session.token (example)       |
+| **cache** *(optional)*            | Enable cache. The permissions will be cached based for a token+source with a TTL of 600 (10min)           | **true** (default) / **false**                        |
 | authzv2: ***applicationId***      | Name of application from UM                                                                               | *\_APPLICATION_ID\_*                                  |
 | authzv2: ***url***                | Url of the authz api (v2) You can find this on the api-store                                              | *\_URL\_OAUTHZ\_*                                     |
 | authzv2: ***apiKey***             | Api key. You will need to create an application with a contract with the authz api                        | *\_APIKEY\_*                                          |
@@ -142,6 +143,9 @@ async function createSomething(params, usertoken) {
 -  `Missing permissions: permission1` [Detail](#missing-permissions)
 -  `Failed to retrieve permissions.` [Detail](#failed-to-retrieve-permissions)
 -  `No authorization found in header.`
+-  `No source defined for permissions`
++  `No valid datasource defined for permissions`
+
 
 ##### Error detail:
 
@@ -209,8 +213,7 @@ $ npm run coverage
 -  **Lodash:** [npm](https://www.npmjs.com/package/lodash), [Github](https://github.com/lodash/lodash)
 -  **Request:** [npm](https://www.npmjs.com/package/request), [Github](https://github.com/request/request)
 -  **Request-Promise:** [npm](https://www.npmjs.com/package/request-promise), [Github](https://github.com/request/request-promise)
--  **winston:** [npm](https://www.npmjs.com/package/winston), [Github](https://github.com/winstonjs/winston)
-
+-  **node-cache:** [npm](https://www.npmjs.com/package/node-cache), [Github](https://github.com/node-cache/node-cache)
 
 ## Versioning
 
