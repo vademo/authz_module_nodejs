@@ -1,7 +1,6 @@
 const chai = require('chai');
 const sinon = require('sinon');
 const config = require('../lib/config');
-const PermissionError = require('../lib/errors/permission.error');
 const permissionService = require('../lib/services/permissions.service');
 const um = require('../lib/services/datasources/authzv2.permissions');
 const meauthz = require('../lib/services/datasources/meauthz.permissions');
