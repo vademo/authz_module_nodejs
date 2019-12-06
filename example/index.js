@@ -1,8 +1,8 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 const express = require('express');
 const { config, hasPermission } = require('./../lib');
 const errorhandler = require('./error.middleware');
-const { helloWorld, helloWorldAuthInController } = require('./demo.controller');
+const permissionService = require('./permission.service');
+const { helloWorld, helloWorldAuthz } = require('./demo.controller');
 
 const app = express();
 const port = 3000;
@@ -11,6 +11,7 @@ const port = 3000;
 config({
   debug: true,
   source: 'authzv2',
+  tokenLocation: 'headers.authorization',
   sources: {
     authzv2: {
       url: process.env.AUTHZV2_URL,
@@ -22,12 +23,15 @@ config({
       apiKey: process.env.MEAUTHZ_APIKEY,
       applicationId: process.env.APPID,
     },
+    myownpermissionservice: permissionService,
   },
 });
 
 app.get('/', hasPermission('login-app'), helloWorld);
-app.get('/helloWorldAuthInController', helloWorldAuthInController);
 app.get('/meauthz', hasPermission('login-app', 'meauthz'), helloWorld);
+app.get('/externalPermissionservice', hasPermission('login-app', 'myownpermissionservice'), helloWorld);
+
+app.get('/authzInController', helloWorldAuthz);
 
 // Handle PermissionErrors from hasPermission middleware
 app.use(errorhandler);

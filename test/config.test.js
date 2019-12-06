@@ -27,8 +27,8 @@ describe('Config', () => {
     expect(config.setConfig({ ok: 'okk' }, true)).to.eql({ ok: 'okk', set: true });
     expect(config.getConfig()).to.eql({ ok: 'okk', set: true });
   });
-  it('Double setConfig({}) should log warn in debugmodus', () => {
-    const logging = sandbox.spy(logginghelper.logger, 'warn');
+  it('Double setConfig({}) should log error in debugmodus', () => {
+    const logging = sandbox.spy(logginghelper.logger, 'error');
     const oldconfig = config.getConfig();
     expect(config.setConfig(oldconfig)).to.eql(oldconfig);
     expect(config.setConfig({ ok: 'okk', debug: true })).to.eql(oldconfig);
