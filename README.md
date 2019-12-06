@@ -213,8 +213,7 @@ $ npm run coverage
 -  **Lodash:** [npm](https://www.npmjs.com/package/lodash), [Github](https://github.com/lodash/lodash)
 -  **Request:** [npm](https://www.npmjs.com/package/request), [Github](https://github.com/request/request)
 -  **Request-Promise:** [npm](https://www.npmjs.com/package/request-promise), [Github](https://github.com/request/request-promise)
--  **winston:** [npm](https://www.npmjs.com/package/winston), [Github](https://github.com/winstonjs/winston)
-
+-  **node-cache:** [npm](https://www.npmjs.com/package/node-cache), [Github](https://github.com/node-cache/node-cache)
 
 ## Versioning
 
