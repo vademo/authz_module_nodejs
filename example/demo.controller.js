@@ -4,7 +4,7 @@ function helloWorld(req, res) {
   return res.send('Hello World!');
 }
 
-async function helloWorldAuthInController(req, res, next) {
+async function helloWorldAuthz(req, res, next) {
   try {
     if (!req.get('authorization')) throw new Error('missing token');
 

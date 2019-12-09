@@ -15,11 +15,12 @@ Authorization module which can be used to check the permissions of an authentica
    * [Usage](#usage)
       * [Usage as express middleware](#usage-as-express-middleware)
       * [Usage as function](#usage-as-function)
+      * [External authorization source](#external-authorization-source)
       * [Permissionerror](#permissionerror)
-      	  * [Model](#model)
-      	     * [Error messages](#error-messages)
-      	     * [Error detail](#error-detail)
-      	     * [Error handling](#error-handling)
+          * [Model](#model)
+             * [Error messages](#error-messages)
+             * [Error detail](#error-detail)
+             * [Error handling](#error-handling)
    * [Running the tests](#running-the-tests)
    * [Versioning](#versioning)
    * [Authors](#authors)
@@ -121,6 +122,44 @@ async function createSomething(params, usertoken) {
     return create(params);
 }
 ```
+#### External authorization source:
+
+You can plug in your own implementation for retrieving permissions:
+
+##### Requirements:
+
+
+ * Your function should take 1 argument: `token`. The token will be stripped from the `Bearer` prefixes.
+ * Permissions should be returned as an array.
+
+
+```javascript
+const { checkPermission, config } = require('@digipolis/authz');
+const controller = require('./controller');
+
+function AuthzImplementation (token) {
+    // Retrieve the users permissions here
+    return ['permission1', 'permission2'];
+}
+
+config({
+  debug: true,
+  source: 'externalAuthz',
+  tokenLocation: 'headers.authorization',
+  sources: {
+    externalAuthz: AuthzImplementation,
+    meauthz: {
+      url:  '_URL_AUTHZ_',
+      apiKey: '_APIKEY_',
+      applicationId: '_APPLICATION_ID_',
+    },
+  },
+});
+
+router.get('/', hasPermission('permission1'), controller); // Use own implementation (set as default)
+router.get('/', hasPermission('login-app', 'meauthz'), controller); // Use defined meauthz implementation
+
+```
 
 #### PermissionError:
 
@@ -140,12 +179,13 @@ async function createSomething(params, usertoken) {
 
 -  `ApplicationId not configured.`
 -  `Authzv2 not configured.`
+-  `meAuthz not configured.`
 -  `Missing permissions: permission1` [Detail](#missing-permissions)
 -  `Failed to retrieve permissions.` [Detail](#failed-to-retrieve-permissions)
 -  `No authorization found in header.`
 -  `No source defined for permissions`
-+  `No valid datasource defined for permissions`
-
+-  `No valid datasource defined for permissions`
+-  `Permission service returned permissions in an unexpected format`
 
 ##### Error detail:
 
@@ -163,9 +203,9 @@ async function createSomething(params, usertoken) {
 {
   message: "Missing permissions: permission1",
   detail: {
-	missingPermissions: ["permission1"],
-	requiredPermissions: "permission1",
-	foundPermissions: ["permission2"]
+    missingPermissions: ["permission1"],
+    requiredPermissions: "permission1",
+    foundPermissions: ["permission2"]
   }
 }
 ```
