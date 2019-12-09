@@ -88,6 +88,21 @@ describe('permissionvalidation.service', () => {
     });
   });
   it('Disabled config should allow everything', (done) => {
+    sandbox.stub(config, 'getConfig').returns({
+      debug: false,
+      disabled: true,
+      applicationId: 'FAKEAPP',
+      source: 'authzv2',
+      sources: {
+      },
+    });
+    permissionvalidation('faketoken', ['a', 'b'], 'abccab').then(() => {
+      done();
+    }).catch((e) => {
+      done(e);
+    });
+  });
+  it('Disabled config should allow everything (debug)', (done) => {
     const logging = sandbox.spy(logginghelper.logger, 'warn');
     sandbox.stub(config, 'getConfig').returns({
       debug: true,
