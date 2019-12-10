@@ -88,6 +88,7 @@ describe('permissionvalidation.service', () => {
     });
   });
   it('Disabled config should allow everything', (done) => {
+    const logging = sandbox.spy(logginghelper.logger, 'error');
     sandbox.stub(config, 'getConfig').returns({
       debug: false,
       disabled: true,
@@ -97,13 +98,18 @@ describe('permissionvalidation.service', () => {
       },
     });
     permissionvalidation('faketoken', ['a', 'b'], 'abccab').then(() => {
+      sinon.assert.calledWith(logging, errorMessages.DISABLED_CONFIGURATION, {
+        authToken: 'faketoken',
+        requiredPermissions: ['a', 'b'],
+        requestedsource: 'abccab',
+      });
       done();
     }).catch((e) => {
       done(e);
     });
   });
   it('Disabled config should allow everything (debug)', (done) => {
-    const logging = sandbox.spy(logginghelper.logger, 'warn');
+    const logging = sandbox.spy(logginghelper.logger, 'error');
     sandbox.stub(config, 'getConfig').returns({
       debug: true,
       disabled: true,
