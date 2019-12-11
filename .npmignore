@@ -1,0 +1,10 @@
+.coveralls.yml
+.editorconfig
+.env
+.eslintignore
+.eslintrc.json
+coverage
+example
+nodemon.json
+swagger.yml
+test
