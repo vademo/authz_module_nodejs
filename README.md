@@ -54,6 +54,7 @@ For applications which use the User Management Engine and have an OAuth2 access 
 | Param                             | Description                                                                                               | Values                                                |
 | :---                              | :---                                                                                                      | :---                                                  |
 | ***debug*** *(optional)*          | Set debugging mode                                                                                        | **true** / **false** (default)                        |
+| ***disabled*** *(optional)*       | Disable the authz check. This will allow everything for each token. Only for testing / dev purposes.      | **true** / **false** (default)                        |
 | ***source***                      | The source to use by default. You can also specify a source in the function call                          | **authzv2** / **meauthz**                             |
 | ***sources***                     | Object with possible authz sources and their configurations                                               | `{ authzv2: { _config_ }}`                            |
 | **tokenLocation** *(optional)*    | Location of the token on the request object. Used by middleware. Defaults to 'headers.authorization'      | headers.authorization / session.token (example)       |

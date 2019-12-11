@@ -2,7 +2,9 @@ const chai = require('chai');
 const sinon = require('sinon');
 const config = require('../lib/config');
 const PermissionError = require('../lib/errors/permission.error');
+const logginghelper = require('../lib/helper/logging.helper');
 const permissionvalidation = require('../lib/services/permissionvalidation.service');
+const errorMessages = require('../lib/errors/error.messages');
 
 chai.use(require('sinon-chai'));
 
@@ -83,6 +85,48 @@ describe('permissionvalidation.service', () => {
       expect(e).to.be.instanceof(PermissionError);
       expect(e.message).to.eql('Permission service returned permissions in an unexpected format');
       done();
+    });
+  });
+  it('Disabled config should allow everything', (done) => {
+    const logging = sandbox.spy(logginghelper.logger, 'error');
+    sandbox.stub(config, 'getConfig').returns({
+      debug: false,
+      disabled: true,
+      applicationId: 'FAKEAPP',
+      source: 'authzv2',
+      sources: {
+      },
+    });
+    permissionvalidation('faketoken', ['a', 'b'], 'abccab').then(() => {
+      sinon.assert.calledWith(logging, errorMessages.DISABLED_CONFIGURATION, {
+        authToken: 'faketoken',
+        requiredPermissions: ['a', 'b'],
+        requestedsource: 'abccab',
+      });
+      done();
+    }).catch((e) => {
+      done(e);
+    });
+  });
+  it('Disabled config should allow everything (debug)', (done) => {
+    const logging = sandbox.spy(logginghelper.logger, 'error');
+    sandbox.stub(config, 'getConfig').returns({
+      debug: true,
+      disabled: true,
+      applicationId: 'FAKEAPP',
+      source: 'authzv2',
+      sources: {
+      },
+    });
+    permissionvalidation('faketoken', ['a', 'b'], 'abccab').then(() => {
+      sinon.assert.calledWith(logging, errorMessages.DISABLED_CONFIGURATION, {
+        authToken: 'faketoken',
+        requiredPermissions: ['a', 'b'],
+        requestedsource: 'abccab',
+      });
+      done();
+    }).catch((e) => {
+      done(e);
     });
   });
 });
