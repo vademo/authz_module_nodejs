@@ -1,4 +1,5 @@
 .coveralls.yml
+.nyc_output
 .editorconfig
 .env
 .eslintignore
