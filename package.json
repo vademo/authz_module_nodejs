@@ -2,7 +2,6 @@
   "name": "@digipolis/authz",
   "version": "1.0.0",
   "description": "Node.js package for authorization",
-  "main": "index.js",
   "scripts": {
     "test": "mocha ./test",
     "start": "echo '----- To start the demo you should be in the example folder. -----'",
