@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased] - yyyy-mm-dd
 
 
+[1.0.1]: https://github.com/digipolisantwerp/authz_module_nodejs/tree/v1.0.1
+## [1.0.1] - 2019-12-11
+
+- Initial release contained nyc test coverage files.
+
 [1.0.0]: https://github.com/digipolisantwerp/authz_module_nodejs/tree/v1.0.0
 ## [1.0.0] - 2019-12-11
 
