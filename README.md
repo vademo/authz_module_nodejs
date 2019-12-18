@@ -42,10 +42,10 @@ $ yarn add @digipolis/authz
 
 ## Configuration
 
-###Available sources:
-####authzv2:
+### Available sources:
+#### authzv2:
 For applications which use the User Management Engine and have a JWT token of the authenticated user (mostly API's).
-####meauthzv2:
+#### meauthzv2:
 For applications which use the User Management Engine and have an OAuth2 access token of the authenticated user (mostly BFF's).
 
 ### Configuration for the use with the User Management Engine (UM):

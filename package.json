@@ -1,7 +1,7 @@
 {
   "name": "@digipolis/authz",
   "version": "1.0.1",
-  "description": "Node.js package for authorization",
+  "description": "Authorization module which can be used to check the permissions of an authenticated user.",
   "scripts": {
     "test": "mocha ./test",
     "start": "echo '----- To start the demo you should be in the example folder. -----'",
