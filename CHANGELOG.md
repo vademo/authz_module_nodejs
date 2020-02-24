@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased] - yyyy-mm-dd
 
 
+[1.1.0]: https://github.com/digipolisantwerp/authz_module_nodejs/tree/v1.0.1
+## [1.1.0] - 2020-02-24
+
+- Expose `getPermissions()` to allow retrieving permissions as a list
+
 [1.0.1]: https://github.com/digipolisantwerp/authz_module_nodejs/tree/v1.0.1
 ## [1.0.1] - 2019-12-11
 

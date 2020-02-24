@@ -1,5 +1,5 @@
 const express = require('express');
-const { config, hasPermission } = require('./../lib');
+const { config, hasPermission, getPermissions } = require('./../lib');
 const errorhandler = require('./error.middleware');
 const permissionService = require('./permission.service');
 const { helloWorld, helloWorldAuthz } = require('./demo.controller');
@@ -30,8 +30,15 @@ config({
 app.get('/', hasPermission('login-app'), helloWorld);
 app.get('/meauthz', hasPermission('login-app', 'meauthz'), helloWorld);
 app.get('/externalPermissionservice', hasPermission('login-app', 'myownpermissionservice'), helloWorld);
-
 app.get('/authzInController', helloWorldAuthz);
+app.get('/getPermissions', async (req, res, next) => {
+  try {
+    const permissions = await getPermissions(req.headers.authorization, 'meauthz');
+    return res.json(permissions);
+  } catch (e) {
+    return next(e);
+  }
+});
 
 // Handle PermissionErrors from hasPermission middleware
 app.use(errorhandler);
