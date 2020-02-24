@@ -1,6 +1,6 @@
 {
   "name": "@digipolis/authz",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Authorization module which can be used to check the permissions of an authenticated user.",
   "scripts": {
     "test": "mocha ./test",
