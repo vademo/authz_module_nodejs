@@ -15,6 +15,7 @@ Authorization module which can be used to check the permissions of an authentica
    * [Usage](#usage)
       * [Usage as express middleware](#usage-as-express-middleware)
       * [Usage as function](#usage-as-function)
+      * [permissions list](#permissions-list)
       * [External authorization source](#external-authorization-source)
       * [Permissionerror](#permissionerror)
           * [Model](#model)
@@ -123,6 +124,7 @@ async function createSomething(params, usertoken) {
     return create(params);
 }
 ```
+
 #### External authorization source:
 
 You can plug in your own implementation for retrieving permissions:
@@ -161,6 +163,26 @@ router.get('/', hasPermission('permission1'), controller); // Use own implementa
 router.get('/', hasPermission('login-app', 'meauthz'), controller); // Use defined meauthz implementation
 
 ```
+#### Permissions list:
+Retrieve permissions as a list
+
+```javascript
+  // Default source (set in config)
+  const permissions = await getPermissions(req.headers.authorization);
+
+  // specific  source
+  const permissionsMeauthz = await getPermissions(req.headers.authorization, 'meauthz');
+```
+**Returns:** *Array['string']*:
+
+```javascript
+[
+    "PERMISSION_1",
+    "PERMISSION_2",
+    "PERMISSION_3",
+]
+```
+
 
 #### PermissionError:
 

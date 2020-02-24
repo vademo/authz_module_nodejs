@@ -22,5 +22,5 @@ async function helloWorldAuthz(req, res, next) {
 
 module.exports = {
   helloWorld,
-  helloWorldAuthInController,
+  helloWorldAuthz,
 };
