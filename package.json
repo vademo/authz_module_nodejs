@@ -7,6 +7,10 @@
     "start": "echo '----- To start the demo you should be in the example folder. -----'",
     "coverage": "nyc --reporter=html --reporter=text --reporter=lcovonly npm test && eslint ."
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/digipolisantwerp/authz_module_nodejs.git"
+  },
   "author": "Olivier Van den Mooter",
   "license": "MIT",
   "main": "lib/index.js",
