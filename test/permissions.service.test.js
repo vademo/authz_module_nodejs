@@ -41,6 +41,11 @@ describe('permissions.service', () => {
     permissionService.getPermissions('faketoken', 'authzv2');
     sinon.assert.called(umsstub);
   });
+  it('Configured get by config', () => {
+    sandbox.stub(config, 'getConfig').returns({ ...umConfig, debug: false });
+    permissionService.getPermissions('faketoken');
+    sinon.assert.called(umsstub);
+  });
   it('request spesific source in call', async () => {
     sandbox.stub(config, 'getConfig').returns({
       debug: true,
