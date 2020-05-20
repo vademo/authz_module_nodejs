@@ -14,6 +14,8 @@ Authorization module which can be used to check the permissions of an authentica
       * [npm](#npm)
       * [Yarn](#yarn)
    * [Configuration](#configuration)
+      * [Example headers](#example-with-headers)
+      * [Example With auth package / session](#Example-with-session-or-auth-package)
    * [Installation](#installation)
    * [Usage](#usage)
       * [Usage as express middleware](#usage-as-express-middleware)
@@ -67,7 +69,7 @@ For applications which use the User Management Engine and have an OAuth2 access 
 | authzv2: ***url***                | Url of the authz api (v2) You can find this on the api-store                                              | *\_URL\_OAUTHZ\_*                                     |
 | authzv2: ***apiKey***             | Api key. You will need to create an application with a contract with the authz api                        | *\_APIKEY\_*                                          |
 
-##### Example:
+##### Example with headers:
 
 ```javascript
 const { config } = require('@digipolis/authz');
@@ -82,6 +84,26 @@ config({
       apiKey: '_APIKEY_',
       applicationId: '_APPLICATION_ID_',
     },
+    meauthz: {
+      url:  '_URL_AUTHZ_',
+      apiKey: '_APIKEY_',
+      applicationId: '_APPLICATION_ID_',
+    },
+  },
+});
+```
+
+##### Example with session or auth package:
+This is a typical setup for bffs that need permission checks and are already using the [Digipolis auth pacakge](https://github.com/digipolisantwerp/auth_module_nodejs) or keeping accesstokens in express-session
+
+```javascript
+const { config } = require('@digipolis/authz');
+
+config({
+  debug: true,
+  source: 'meauthz',
+  tokenLocation: 'session.userToken.accessToken', // The authz pacakge saves the token at this location
+  sources: {
     meauthz: {
       url:  '_URL_AUTHZ_',
       apiKey: '_APIKEY_',
