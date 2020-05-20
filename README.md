@@ -102,7 +102,7 @@ const { config } = require('@digipolis/authz');
 config({
   debug: true,
   source: 'meauthz',
-  tokenLocation: 'session.userToken.accessToken', // The authz pacakge saves the token at this location
+  tokenLocation: 'session.userToken.accessToken', // The auth pacakge saves the token at this location
   sources: {
     meauthz: {
       url:  '_URL_AUTHZ_',
