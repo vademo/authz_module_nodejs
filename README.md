@@ -2,7 +2,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/digipolisantwerp/authz_module_nodejs/badge.svg?branch=master)](https://coveralls.io/github/digipolisantwerp/authz_module_nodejs?branch=master)
 [![npm version](https://badge.fury.io/js/%40digipolis%2Fauthz.svg)](https://badge.fury.io/js/%40digipolis%2Fauthz)
 
-**npm:** [npmjs.com/package/@digipolis/authz](/https://www.npmjs.com/package/@digipolis/authz)
+**npm:** [npmjs.com/package/@digipolis/authz](https://www.npmjs.com/package/@digipolis/authz)
 # @digipolis/Authz
 
 Authorization module which can be used to check the permissions of an authenticated user.
