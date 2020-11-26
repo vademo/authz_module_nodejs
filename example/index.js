@@ -18,9 +18,9 @@ config({
       apiKey: process.env.AUTHZV2_APIKEY,
       applicationId: process.env.APPID,
     },
-    meauthz: {
-      url: process.env.MEAUTHZ_URL,
-      apiKey: process.env.MEAUTHZ_APIKEY,
+    meauthzv2: {
+      url: process.env.MEAUTHZV2_URL,
+      apiKey: process.env.MEAUTHZV2_APIKEY,
       applicationId: process.env.APPID,
     },
     myownpermissionservice: permissionService,
@@ -28,7 +28,7 @@ config({
 });
 
 app.get('/', hasPermission('login-app'), helloWorld);
-app.get('/meauthz', hasPermission('login-app', 'meauthz'), helloWorld);
+app.get('/meauthz', hasPermission('login-app', 'meauthzv2'), helloWorld);
 app.get('/externalPermissionservice', hasPermission('login-app', 'myownpermissionservice'), helloWorld);
 app.get('/authzInController', helloWorldAuthz);
 app.get('/getPermissions', async (req, res, next) => {

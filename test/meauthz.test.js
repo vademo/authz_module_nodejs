@@ -1,5 +1,5 @@
 const chai = require('chai');
-const request = require('request-promise');
+const axios = require('axios');
 const logginghelper = require('../lib/helper/logging.helper');
 const sinon = require('sinon');
 const PermissionError = require('../lib/errors/permission.error');
@@ -16,13 +16,14 @@ const umConfig = {
   debug: true,
   source: 'authzv2',
   sources: {
-    meauthz: {
+    meauthzv2: {
       url: 'fakeurl',
       applicationId: 'FAKEAPP',
       apiKey: 'fakekey',
     },
   },
 };
+
 describe('Get Permissions from authzv2:', () => {
   let sandbox;
   beforeEach((done) => {
@@ -35,7 +36,7 @@ describe('Get Permissions from authzv2:', () => {
   it('Success', async () => {
     sandbox.stub(config, 'getConfig').returns({ ...umConfig, debug: false });
     const logging = sandbox.spy(logginghelper.logger, 'error');
-    sandbox.stub(request, 'get').returns(Promise.resolve(umPermissions));
+    sandbox.stub(axios, 'get').returns(Promise.resolve({ data: umPermissions }));
     const permissions = await um.getPermissions('FAKEAPP', 'FakeJWT');
     sinon.assert.notCalled(logging);
     expect(permissions).to.eql(umPermissions.permissions);
@@ -43,13 +44,24 @@ describe('Get Permissions from authzv2:', () => {
   it('Success (debug)', async () => {
     sandbox.stub(config, 'getConfig').returns({ ...umConfig });
     const logging = sandbox.spy(logginghelper.logger, 'error');
-    sandbox.stub(request, 'get').returns(Promise.resolve(umPermissions));
+    sandbox.stub(axios, 'get').returns(Promise.resolve({ data: umPermissions }));
     const permissions = await um.getPermissions('FAKEAPP', 'FakeJWT');
     sinon.assert.notCalled(logging);
     expect(permissions).to.eql(umPermissions.permissions);
   });
   it('Error not configured (debug)', async () => {
     sandbox.stub(config, 'getConfig').returns({ debug: true });
+    const logging = sandbox.spy(logginghelper.logger, 'warn');
+    await um.getPermissions('FAKEAPP', 'FakeJWT').then((result) => {
+      throw new Error("shouldn't resolve", result);
+    }).catch((e) => {
+      expect(e).to.be.instanceof(Error);
+      expect(e.message).to.eql(MEAUTHZ_CONFIG_MISSING);
+      sinon.assert.called(logging);
+    });
+  });
+  it('Error not configured (debug)', async () => {
+    sandbox.stub(config, 'getConfig').returns({ debug: true, sources: {} });
     const logging = sandbox.spy(logginghelper.logger, 'warn');
     await um.getPermissions('FAKEAPP', 'FakeJWT').then((result) => {
       throw new Error("shouldn't resolve", result);
@@ -75,7 +87,7 @@ describe('Get Permissions from authzv2:', () => {
       ...umConfig,
       debug: false,
       sources: {
-        meauthz: {
+        meauthzv2: {
           url: 'fakeurl',
           applicationId: false,
           apiKey: 'fakekey',
@@ -96,7 +108,7 @@ describe('Get Permissions from authzv2:', () => {
       ...umConfig,
       debug: true,
       sources: {
-        meauthz: {
+        meauthzv2: {
           url: 'fakeurl',
           applicationId: false,
           apiKey: 'fakekey',
@@ -115,7 +127,7 @@ describe('Get Permissions from authzv2:', () => {
   it('Failed', async () => {
     sandbox.stub(config, 'getConfig').returns({ ...umConfig, debug: false });
     const logging = sandbox.spy(logginghelper.logger, 'error');
-    sandbox.stub(request, 'get').returns(Promise.reject(new Error('errormessage')));
+    sandbox.stub(axios, 'get').returns(Promise.reject(new Error('errormessage')));
     await um.getPermissions('FAKEAPP', 'FakeJWT').then((result) => {
       throw new Error("shouldn't resolve", result);
     }).catch((e) => {
@@ -126,7 +138,7 @@ describe('Get Permissions from authzv2:', () => {
   it('Failed (debug)', async () => {
     sandbox.stub(config, 'getConfig').returns({ ...umConfig, debug: true });
     const logging = sandbox.spy(logginghelper.logger, 'warn');
-    sandbox.stub(request, 'get').returns(Promise.reject(new Error('errormessage')));
+    sandbox.stub(axios, 'get').returns(Promise.reject(new Error('errormessage')));
     await um.getPermissions('FAKEAPP', 'FakeJWT').then((result) => {
       throw new Error("shouldn't resolve", result);
     }).catch((e) => {
@@ -139,7 +151,7 @@ describe('Get Permissions from authzv2:', () => {
     sandbox.stub(config, 'getConfig').returns({ ...umConfig, debug: true });
     const logging = sandbox.spy(logginghelper.logger, 'warn');
     // eslint-disable-next-line prefer-promise-reject-errors
-    sandbox.stub(request, 'get').returns(Promise.reject({ name: 'StatusCodeError', message: "shouldn't resolve", error: { title: 'title' } }));
+    sandbox.stub(axios, 'get').returns(Promise.reject({ status: 500 }));
     await um.getPermissions('FAKEAPP', 'FakeJWT').then((result) => {
       throw new Error("shouldn't resolve", result);
     }).catch((e) => {
@@ -152,7 +164,7 @@ describe('Get Permissions from authzv2:', () => {
     sandbox.stub(config, 'getConfig').returns({ ...umConfig, debug: true });
     const logging = sandbox.spy(logginghelper.logger, 'warn');
     // eslint-disable-next-line prefer-promise-reject-errors
-    sandbox.stub(request, 'get').returns(Promise.reject({ name: 'StatusCodeError', message: "shouldn't resolve" }));
+    sandbox.stub(axios, 'get').returns(Promise.reject({ status: 500 }));
     await um.getPermissions('FAKEAPP', 'FakeJWT').then((result) => {
       throw new Error("shouldn't resolve", result);
     }).catch((e) => {

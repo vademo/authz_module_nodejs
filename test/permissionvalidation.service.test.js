@@ -72,7 +72,7 @@ describe('permissionvalidation.service', () => {
           url: 'fakeurl',
           apiKey: 'fakekey',
         },
-        meauthz: {
+        meauthzv2: {
           url: 'fakeurl',
           apiKey: 'fakekey',
         },

@@ -56,7 +56,7 @@ describe('permissions.service', () => {
           url: 'fakeurl',
           apiKey: 'fakekey',
         },
-        meauthz: {
+        meauthzv2: {
           url: 'fakeurl',
           apiKey: 'fakekey',
         },
@@ -65,7 +65,7 @@ describe('permissions.service', () => {
     const permissions = await permissionService.getPermissions('faketoken', 'authzv2');
     sinon.assert.called(umsstub);
     expect(permissions).to.eql(['permission3', 'permission2', 'permission1']);
-    const mepermissions = await permissionService.getPermissions('faketoken', 'meauthz');
+    const mepermissions = await permissionService.getPermissions('faketoken', 'meauthzv2');
     expect(mepermissions).to.eql(['mepermission3', 'mepermission2', 'mepermission1']);
     sinon.assert.called(mestub);
   });
@@ -98,7 +98,7 @@ describe('permissions.service', () => {
           url: 'fakeurl',
           apiKey: 'fakekey',
         },
-        meauthz: {
+        meauthzv2: {
           url: 'fakeurl',
           apiKey: 'fakekey',
         },

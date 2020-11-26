@@ -26,9 +26,8 @@
     "sinon-chai": "^3.3.0"
   },
   "dependencies": {
+    "axios": "^0.21.0",
     "lodash": "^4.17.15",
-    "node-cache": "^5.0.2",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.5"
+    "node-cache": "^5.1.2"
   }
 }
