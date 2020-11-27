@@ -4,6 +4,7 @@ const logginghelper = require('../lib/helper/logging.helper');
 const sinon = require('sinon');
 const PermissionError = require('../lib/errors/permission.error');
 const umPermissions = require('./data/um.permissions.json');
+const axios401error = require('./data/axios.error401.json');
 const { MEAUTHZ_CONFIG_MISSING, APPLICATIONID_MISSING, PERMISSION_CALL_FAILED } = require('../lib/errors/error.messages');
 
 chai.use(require('sinon-chai'));
@@ -14,7 +15,7 @@ const um = require('../lib/services/datasources/meauthz.permissions');
 
 const umConfig = {
   debug: true,
-  source: 'authzv2',
+  source: 'meauthz',
   sources: {
     meauthzv2: {
       url: 'fakeurl',
@@ -24,7 +25,7 @@ const umConfig = {
   },
 };
 
-describe('Get Permissions from authzv2:', () => {
+describe('Get Permissions from meAuthzv2:', () => {
   let sandbox;
   beforeEach((done) => {
     sandbox = sinon.createSandbox();
@@ -151,7 +152,7 @@ describe('Get Permissions from authzv2:', () => {
     sandbox.stub(config, 'getConfig').returns({ ...umConfig, debug: true });
     const logging = sandbox.spy(logginghelper.logger, 'warn');
     // eslint-disable-next-line prefer-promise-reject-errors
-    sandbox.stub(axios, 'get').returns(Promise.reject({ status: 500 }));
+    sandbox.stub(axios, 'get').returns(Promise.reject(axios401error));
     await um.getPermissions('FAKEAPP', 'FakeJWT').then((result) => {
       throw new Error("shouldn't resolve", result);
     }).catch((e) => {
@@ -164,7 +165,7 @@ describe('Get Permissions from authzv2:', () => {
     sandbox.stub(config, 'getConfig').returns({ ...umConfig, debug: true });
     const logging = sandbox.spy(logginghelper.logger, 'warn');
     // eslint-disable-next-line prefer-promise-reject-errors
-    sandbox.stub(axios, 'get').returns(Promise.reject({ status: 500 }));
+    sandbox.stub(axios, 'get').returns(Promise.reject(axios401error));
     await um.getPermissions('FAKEAPP', 'FakeJWT').then((result) => {
       throw new Error("shouldn't resolve", result);
     }).catch((e) => {
