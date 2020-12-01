@@ -1,0 +1,23 @@
+{
+  "response": {
+    "status": 401,
+    "statusText": "Unauthorized",
+    "headers": {
+      "date": "Thu, 26 Nov 2020 15:37:02 GMT",
+      "content-type": "application/json; charset=utf-8",
+      "transfer-encoding": "chunked",
+      "connection": "close",
+      "access-control-allow-origin": "*"
+    },
+    "config": {
+      "url": "https://url",
+      "method": "get",
+      "data": "undefined"
+    },
+    "data": {
+      "error_description": "The access token is invalid or has expired",
+      "error": "invalid_token"
+    }
+  },
+  "isAxiosError": true
+}

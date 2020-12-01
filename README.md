@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/digipolisantwerp/starter-kit_app_nodejs.svg?branch=master)](https://travis-ci.com/digipolisantwerp/starter-kit_app_nodejs)
+[![Build Status](https://travis-ci.com/digipolisantwerp/authz_module_nodejs.svg?branch=master)](https://travis-ci.com/digipolisantwerp/authz_module_nodejs)
 [![Coverage Status](https://coveralls.io/repos/github/digipolisantwerp/authz_module_nodejs/badge.svg?branch=master)](https://coveralls.io/github/digipolisantwerp/authz_module_nodejs?branch=master)
 [![npm version](https://badge.fury.io/js/%40digipolis%2Fauthz.svg)](https://badge.fury.io/js/%40digipolis%2Fauthz)
 
@@ -61,7 +61,7 @@ For applications which use the User Management Engine and have an OAuth2 access 
 | :---                              | :---                                                                                                      | :---                                                  |
 | ***debug*** *(optional)*          | Set debugging mode                                                                                        | **true** / **false** (default)                        |
 | ***disabled*** *(optional)*       | Disable the authz check. This will allow everything for each token. Only for testing / dev purposes.      | **true** / **false** (default)                        |
-| ***source***                      | The source to use by default. You can also specify a source in the function call                          | **authzv2** / **meauthz**                             |
+| ***source***                      | The source to use by default. You can also specify a source in the function call                          | **authzv2** / **meauthzv2**                             |
 | ***sources***                     | Object with possible authz sources and their configurations                                               | `{ authzv2: { _config_ }}`                            |
 | **tokenLocation** *(optional)*    | Location of the token on the request object. Used by middleware. Defaults to 'headers.authorization'      | headers.authorization / session.token (example)       |
 | **cache** *(optional)*            | Enable cache. The permissions will be cached based for a token+source with a TTL of 600 (10min)           | **true** (default) / **false**                        |
@@ -84,7 +84,7 @@ config({
       apiKey: '_APIKEY_',
       applicationId: '_APPLICATION_ID_',
     },
-    meauthz: {
+    meauthzv2: {
       url:  '_URL_AUTHZ_',
       apiKey: '_APIKEY_',
       applicationId: '_APPLICATION_ID_',
@@ -101,10 +101,10 @@ const { config } = require('@digipolis/authz');
 
 config({
   debug: true,
-  source: 'meauthz',
+  source: 'meauthzv2',
   tokenLocation: 'session.userToken.accessToken', // The auth pacakge saves the token at this location
   sources: {
-    meauthz: {
+    meauthzv2: {
       url:  '_URL_AUTHZ_',
       apiKey: '_APIKEY_',
       applicationId: '_APPLICATION_ID_',
@@ -129,10 +129,10 @@ const router = new Router();
 
 // Check single permission in default source
 router.get('/', hasPermission('login-app'), controller);
-// Check mutiple permissions in default source
+// Check multiple permissions in default source
 router.get('/', hasPermission(['login-app', 'admin-app']), controller);
-// Check permission in default meauthz source
-router.get('/', hasPermission('login-app', 'meauthz'), controller);
+// Check permission in default meauthzv2 source
+router.get('/', hasPermission('login-app', 'meauthzv2'), controller);
 
 ```
 #### Usage as function:
@@ -145,7 +145,7 @@ const { create } = require('./itemcreator.service');
 async function createSomething(params, usertoken) {
     await checkPermission(usertoken, 'login-app'); //throws error if invalid
     await checkPermission(usertoken, ['login-app', 'use-app']); //throws error if invalid
-    await checkPermission(usertoken, 'login-app', 'meauthz'); //throws error if invalid
+    await checkPermission(usertoken, 'login-app', 'meauthzv2'); //throws error if invalid
     return create(params);
 }
 ```
@@ -176,7 +176,7 @@ config({
   tokenLocation: 'headers.authorization',
   sources: {
     externalAuthz: AuthzImplementation,
-    meauthz: {
+    meauthzv2: {
       url:  '_URL_AUTHZ_',
       apiKey: '_APIKEY_',
       applicationId: '_APPLICATION_ID_',
@@ -228,8 +228,8 @@ Retrieve permissions as a list
 -  `ApplicationId not configured.`
 -  `Authzv2 not configured.`
 -  `meAuthz not configured.`
--  `Missing permissions: permission1` [Detail](#missing-permissions)
--  `Failed to retrieve permissions.` [Detail](#failed-to-retrieve-permissions)
+-  `Missing permissions: permission1` [Detail](#missing-permissions-example)
+-  `Failed to retrieve permissions.` [Detail](#failed-to-retrieve-permissions-example)
 -  `No authorization found in header.`
 -  `No source defined for permissions`
 -  `No valid datasource defined for permissions`
@@ -298,9 +298,7 @@ $ npm run test
 $ npm run coverage
 ```
 ## Dependencies
--  **Lodash:** [npm](https://www.npmjs.com/package/lodash), [Github](https://github.com/lodash/lodash)
--  **Request:** [npm](https://www.npmjs.com/package/request), [Github](https://github.com/request/request)
--  **Request-Promise:** [npm](https://www.npmjs.com/package/request-promise), [Github](https://github.com/request/request-promise)
+-  **axios:** [npm](https://www.npmjs.com/package/axios), [Github](https://github.com/axios/axios)
 -  **node-cache:** [npm](https://www.npmjs.com/package/node-cache), [Github](https://github.com/node-cache/node-cache)
 
 ## Versioning

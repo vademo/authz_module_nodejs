@@ -1,7 +1,9 @@
 const chai = require('chai');
 const sinon = require('sinon');
+const axios = require('axios');
 const config = require('../lib/config');
 const { TOKEN_MISSING, PERMISSION_MISSING } = require('../lib/errors/error.messages');
+const umPermissions = require('./data/um.permissions.json');
 const hasPermission = require('../lib/middlewares/haspermission.middleware');
 const PermissionError = require('../lib/errors/permission.error');
 const logginghelper = require('../lib/helper/logging.helper');
@@ -19,6 +21,12 @@ const umConfig = {
     authzv2: {
       url: 'fakeurl',
       apiKey: 'fakekey',
+      applicationId: 'FAKEAPP',
+    },
+    meauthzv2: {
+      url: 'fakeurl',
+      apiKey: 'fakekey',
+      applicationId: 'FAKEAPP',
     },
   },
 };
@@ -44,6 +52,39 @@ describe('Haspermission middleware', () => {
     sandbox.stub(config, 'getConfig').returns({ ...umConfig, debug: false });
     sandbox.stub(authzv2, 'getPermissions').resolves(['permission3', 'permission2', 'permission1']);
     const middleware = hasPermission(['permission2', 'permission1']);
+    await middleware(fakeReq, {}, nextStub);
+    const errArg = nextStub.firstCall.args[0];
+    expect(errArg, 'Next shoudn`t be called with argument if successful`').to.be.undefined;
+  });
+  it('Permissions array (with datasource meauthzv2)', async () => {
+    sandbox.stub(config, 'getConfig').returns({ ...umConfig, debug: false });
+    sandbox.stub(axios, 'get').returns(Promise.resolve({ data: umPermissions }));
+    const middleware = hasPermission(['login-app'], 'meauthzv2');
+    await middleware(fakeReq, {}, nextStub);
+    const errArg = nextStub.firstCall.args[0];
+    expect(errArg, 'Next shoudn`t be called with argument if successful`').to.be.undefined;
+  });
+  it('Permissions array (with datasource meauthz)', async () => {
+    sandbox.stub(config, 'getConfig').returns({
+      debug: true,
+      applicationId: 'FAKEAPP',
+      source: 'authzv2',
+      tokenLocation: 'headers.authorization',
+      sources: {
+        authzv2: {
+          url: 'fakeurl',
+          apiKey: 'fakekey',
+          applicationId: 'FAKEAPP',
+        },
+        meauthz: {
+          url: 'fakeurl',
+          apiKey: 'fakekey',
+          applicationId: 'FAKEAPP',
+        },
+      },
+    });
+    sandbox.stub(axios, 'get').returns(Promise.resolve({ data: umPermissions }));
+    const middleware = hasPermission(['login-app'], 'meauthz');
     await middleware(fakeReq, {}, nextStub);
     const errArg = nextStub.firstCall.args[0];
     expect(errArg, 'Next shoudn`t be called with argument if successful`').to.be.undefined;
