@@ -298,7 +298,6 @@ $ npm run test
 $ npm run coverage
 ```
 ## Dependencies
--  **Lodash:** [npm](https://www.npmjs.com/package/lodash), [Github](https://github.com/lodash/lodash)
 -  **axios:** [npm](https://www.npmjs.com/package/axios), [Github](https://github.com/axios/axios)
 -  **node-cache:** [npm](https://www.npmjs.com/package/node-cache), [Github](https://github.com/node-cache/node-cache)
 

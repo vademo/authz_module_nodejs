@@ -27,7 +27,6 @@
   },
   "dependencies": {
     "axios": "^0.21.0",
-    "lodash": "^4.17.15",
     "node-cache": "^5.1.2"
   }
 }
