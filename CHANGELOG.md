@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [Unreleased]: https://github.com/digipolisantwerp/authz_module_nodejs/compare/v1.0.0...HEAD
 ## [Unreleased] - yyyy-mm-dd
 
+[1.2.0]: https://github.com/digipolisantwerp/authz_module_nodejs/tree/v1.2.0
+## [1.2.0] - 2020-12-01
+
+- Make interface more consistent by including version in meauthzv2 (backwards compatible with meauthz)
+- Update documentation
+- Update dependencies
+- Replace deprecated dependencies request & request-promise by Axios
+- Remove lodash as dependency (replaced by You-Dont-Need-Lodash functions)
+- Remove unused nodemon as dev dependency
+
 [1.1.1]: https://github.com/digipolisantwerp/authz_module_nodejs/tree/v1.1.1
 ## [1.1.1] - 2020-10-07
 
