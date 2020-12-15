@@ -1,9 +1,13 @@
 .coveralls.yml
-.nyc_output
 .editorconfig
 .env
 .eslintignore
 .eslintrc.json
+.nyc_output
+.travis.yml
+CHANGELOG.md
+LICENSE
+README.md
 coverage
 example
 nodemon.json
