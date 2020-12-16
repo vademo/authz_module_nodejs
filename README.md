@@ -317,7 +317,7 @@ Pull requests are always welcome, however keep the following things in mind:
 
 ## Support
 
-* **Olivier Van den Mooter** - *Initial work* - [Vademo](https://github.com/vademo)
+Olivier Van den Mooter (<olivier.vandenmooter@digipolis.be>) - *Initial work* - [Vademo](https://github.com/vademo)
 
 See also the list of [contributors](https://github.com/digipolisantwerp/authz_module_nodejs/graphs/contributors) who participated in this project.
 
